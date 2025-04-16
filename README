@@ -1,0 +1,24 @@
+# Setup
+
+This project requires a GCC compiler and the Protocol Buffers code generation tools.
+
+---
+
+## 🔧 Install Protobuf Compiler
+
+Install the `protoc` tool by following the official instructions:  
+👉 [https://grpc.io/docs/protoc-installation/](https://grpc.io/docs/protoc-installation/)
+
+Alternatively, you can download a pre-built binary from:  
+👉 [https://github.com/protocolbuffers/protobuf/releases](https://github.com/protocolbuffers/protobuf/releases)  
+Place the extracted binary somewhere in your `$PATH`.
+
+---
+
+## 📦 Install Go Protobuf Codegen Tools
+
+Install the following tools using `go install`:
+
+```bash
+go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
