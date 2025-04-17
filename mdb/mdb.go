@@ -100,3 +100,33 @@ func Getmail(db *sql.DB, email string) (*EmailEntry, error) {
 	}
 	return nil, nil
 }
+
+func updateEmail(db *sql.DB, entry EmailEntry) error {
+	t := entry.ConfirmedAt.Unix()
+
+	_, err := db.Query(`INSERT INTO
+		emails(email, confirmed_at, opt_out)
+		VALUES(?, ?, ?)
+		ON CONFLICT(email) DO UPDATE SET
+			confirmed_at=?
+			opt_out=?`, entry.Email, t, entry.OptOut, t, entry.OptOut)
+
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+	return nil
+}
+
+func DeleteEmail(db *sql.DB, email string) error {
+	_, err := db.Exec(`
+		UPDATE emails
+		SET opt_out=true
+		WHERE email=?`, email)
+
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+	return nil
+}
