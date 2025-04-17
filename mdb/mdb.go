@@ -137,3 +137,53 @@ func DeleteEmail(db *sql.DB, email string) error {
 	}
 	return nil
 }
+
+// GetEmailBatchQueryParams defines query parameters for paginating emails.
+type GetEmailBatchQueryParams struct {
+	Page  int // Page number (starting from 1)
+	Count int // Number of results per page
+}
+
+// GetEmailBatch retrieves a batch of active email entries (not opted out) from the database,
+// using LIMIT and OFFSET for pagination.
+func GetEmailBatch(db *sql.DB, params GetEmailBatchQueryParams) ([]EmailEntry, error) {
+	var empty []EmailEntry
+
+	// Calculate offset based on page number and count
+	offset := (params.Page - 1) * params.Count
+
+	rows, err := db.Query(`
+		SELECT id, email, confirmed_at, opt_out
+		FROM emails
+		WHERE opt_out = false
+		ORDER BY id ASC
+		LIMIT ? OFFSET ?
+	`, params.Count, offset)
+
+	if err != nil {
+		log.Println("Query error in GetEmailBatch:", err)
+		return empty, err
+	}
+	defer rows.Close()
+
+	// Preallocate memory for better performance
+	emails := make([]EmailEntry, 0, params.Count)
+
+	// Iterate over the rows and convert each to an EmailEntry
+	for rows.Next() {
+		email, err := emailEntryFromRow(rows)
+		if err != nil {
+			log.Println("Row scan error in GetEmailBatch:", err)
+			return nil, err
+		}
+		emails = append(emails, *email)
+	}
+
+	// Check for any row iteration errors
+	if err := rows.Err(); err != nil {
+		log.Println("Rows error in GetEmailBatch:", err)
+		return nil, err
+	}
+
+	return emails, nil
+}
