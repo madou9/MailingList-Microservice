@@ -69,9 +69,10 @@ func emailEntryFromRow(row *sql.Rows) (*EmailEntry, error) {
 	}, nil
 }
 
+// CreateEmail inserts a new email entry with default values: not confirmed and not opted out.
 func CreateEmail(db *sql.DB, email string) error {
 	_, err := db.Exec(`
-		emails(email, confirmed_at, opt_out)
+		INSERT INTO emails(email, confirmed_at, opt_out)
 		VALUES(?, 0, false)
 	`, email)
 
@@ -82,34 +83,38 @@ func CreateEmail(db *sql.DB, email string) error {
 	return nil
 }
 
-func Getmail(db *sql.DB, email string) (*EmailEntry, error) {
+// GetMail retrieves an email entry from the database by email address.
+func GetMail(db *sql.DB, email string) (*EmailEntry, error) {
 	rows, err := db.Query(`
 		SELECT id, email, confirmed_at, opt_out
 		FROM emails
-		WHERE email = ? `, email)
+		WHERE email = ?
+	`, email)
 
 	if err != nil {
 		log.Println(err)
 		return nil, err
 	}
-
 	defer rows.Close()
 
+	// If there's at least one row, convert it to EmailEntry
 	for rows.Next() {
 		return emailEntryFromRow(rows)
 	}
-	return nil, nil
+	return nil, nil // No entry found
 }
 
-func updateEmail(db *sql.DB, entry EmailEntry) error {
+// UpdateEmail upserts an email entry: if it exists, update it; otherwise, insert it.
+func UpdateEmail(db *sql.DB, entry EmailEntry) error {
 	t := entry.ConfirmedAt.Unix()
 
-	_, err := db.Query(`INSERT INTO
-		emails(email, confirmed_at, opt_out)
+	_, err := db.Exec(`
+		INSERT INTO emails(email, confirmed_at, opt_out)
 		VALUES(?, ?, ?)
 		ON CONFLICT(email) DO UPDATE SET
-			confirmed_at=?
-			opt_out=?`, entry.Email, t, entry.OptOut, t, entry.OptOut)
+			confirmed_at = excluded.confirmed_at,
+			opt_out = excluded.opt_out
+	`, entry.Email, t, entry.OptOut)
 
 	if err != nil {
 		log.Println(err)
@@ -118,11 +123,13 @@ func updateEmail(db *sql.DB, entry EmailEntry) error {
 	return nil
 }
 
+// DeleteEmail performs a soft delete by setting opt_out = true for the given email.
 func DeleteEmail(db *sql.DB, email string) error {
 	_, err := db.Exec(`
 		UPDATE emails
-		SET opt_out=true
-		WHERE email=?`, email)
+		SET opt_out = true
+		WHERE email = ?
+	`, email)
 
 	if err != nil {
 		log.Println(err)
