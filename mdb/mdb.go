@@ -83,8 +83,8 @@ func CreateEmail(db *sql.DB, email string) error {
 	return nil
 }
 
-// GetMail retrieves an email entry from the database by email address.
-func GetMail(db *sql.DB, email string) (*EmailEntry, error) {
+// GetEmail retrieves an email entry from the database by email address.
+func GetEmail(db *sql.DB, email string) (*EmailEntry, error) {
 	rows, err := db.Query(`
 		SELECT id, email, confirmed_at, opt_out
 		FROM emails
