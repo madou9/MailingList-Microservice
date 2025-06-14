@@ -1,31 +1,19 @@
-# 📧 Mailing List Microservice
-
-![Go Version](https://img.shields.io/badge/go-1.22.2-blue.svg)
-![License](https://img.shields.io/badge/license-MIT-green.svg)
+#📧 Mailing List Microservice
 
 A lightweight microservice for managing mailing list subscriptions, confirmations, and soft-deletes. Built in Go with SQLite, designed for modular integration into broader DevOps or cloud orchestration workflows.
 
-## 📋 Table of Contents
+---
 
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Project Structure](#project-structure)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Usage](#usage)
-- [API Documentation](#api-documentation)
-- [Development](#development)
-- [Contributing](#contributing)
-- [License](#license)
+## Features
 
-## ✨ Features
+- ✅ Add, update, confirm, or soft-delete email subscriptions
+- 📄 Paginated email list querying
+- 🗄️ SQLite-backed persistence with auto schema setup
+- 🌐 RESTful API for easy integration
+- 📊 Supports JSON format for API requests and responses
+- ⚡ Protocol Buffers and gRPC support
 
-- Add, update, confirm, or soft-delete email subscriptions
-- Paginated email list querying
-- SQLite-backed persistence with auto schema setup
-- RESTful API for easy integration
-- Supports JSON format for API requests and responses
-- Protocol Buffers and gRPC support
+---
 
 ## 🛠️ Tech Stack
 
@@ -34,6 +22,8 @@ A lightweight microservice for managing mailing list subscriptions, confirmation
 - **JSON API** for RESTful endpoints
 - **Protocol Buffers** for efficient serialization
 - **gRPC** for high-performance RPC
+
+---
 
 ## 📁 Project Structure
 
@@ -48,18 +38,22 @@ A lightweight microservice for managing mailing list subscriptions, confirmation
 └── README.md       # Project documentation
 ```
 
+---
+
 ## 📋 Prerequisites
 
 - Go 1.22.2 or higher
 - GCC compiler (for SQLite)
 - Protocol Buffers compiler (for gRPC)
 
+---
+
 ## 🚀 Installation
 
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/mailinglist-microservice.git
+git clone https://github.com/madou9/MailingList-Microservice.git
 cd mailinglist-microservice
 ```
 
@@ -94,6 +88,22 @@ go mod download
 go build -o mailinglist .
 ```
 
+---
+
+## ⚡ Quick Start
+
+```bash
+# Clone and run in 3 commands
+git clone https://github.com/madou9/MailingList-Microservice.git
+cd mailinglist-microservice
+go run main.go
+
+# Test the API
+curl http://localhost:8080/emails
+```
+
+---
+
 ## 🔍 Usage
 
 ### Running the Service
@@ -106,21 +116,25 @@ The service will start and listen for connections on the configured port.
 
 ### Environment Variables
 
-- `PORT`: HTTP server port (default: 8080)
-- `DB_PATH`: SQLite database file path (default: ./mailinglist.db)
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `PORT` | HTTP server port | `8080` |
+| `DB_PATH` | SQLite database file path | `./mailinglist.db` |
+
+---
 
 ## 📚 API Documentation
 
 ### REST API Endpoints
 
 | Method | Endpoint             | Description                       |
-| ------ | -------------------- | --------------------------------- |
-| GET    | /emails              | List all email subscriptions      |
-| GET    | /emails/{id}         | Get a specific email subscription |
-| POST   | /emails              | Create a new email subscription   |
-| PUT    | /emails/{id}         | Update an existing subscription   |
-| PATCH  | /emails/{id}/confirm | Confirm an email subscription     |
-| PATCH  | /emails/{id}/optout  | Opt-out from the mailing list     |
+|--------|---------------------|-----------------------------------|
+| `GET`    | `/emails`              | List all email subscriptions      |
+| `GET`    | `/emails/{id}`         | Get a specific email subscription |
+| `POST`   | `/emails`              | Create a new email subscription   |
+| `PUT`    | `/emails/{id}`         | Update an existing subscription   |
+| `PATCH`  | `/emails/{id}/confirm` | Confirm an email subscription     |
+| `PATCH`  | `/emails/{id}/optout`  | Opt-out from the mailing list     |
 
 ### Example Request
 
@@ -129,6 +143,20 @@ curl -X POST http://localhost:8080/emails \
   -H "Content-Type: application/json" \
   -d '{"email": "user@example.com"}'
 ```
+
+### Example Response
+
+```json
+{
+  "id": 1,
+  "email": "user@example.com",
+  "confirmed": false,
+  "opted_out": false,
+  "created_at": "2024-01-15T10:30:00Z"
+}
+```
+
+---
 
 ## 💻 Development
 
@@ -148,14 +176,41 @@ After modifying Protocol Buffer definitions, regenerate the code:
 protoc --go_out=. --go-grpc_out=. proto/*.proto
 ```
 
+### Development Setup
+
+1. **Fork** the repository
+2. **Clone** your fork locally
+3. **Create** a new branch for your feature
+4. **Make** your changes
+5. **Test** thoroughly
+6. **Submit** a pull request
+
+---
+
 ## 👥 Contributing
 
-1. Fork the repository
-2. Create your feature branch: `git checkout -b feature/amazing-feature`
-3. Commit your changes: `git commit -m 'Add some amazing feature'`
-4. Push to the branch: `git push origin feature/amazing-feature`
-5. Open a Pull Request
+We welcome contributions! Here's how to get started:
 
-## 📄 License
+1. **Fork** the repository
+2. **Create** your feature branch: `git checkout -b feature/amazing-feature`
+3. **Commit** your changes: `git commit -m 'Add some amazing feature'`
+4. **Push** to the branch: `git push origin feature/amazing-feature`
+5. **Open** a Pull Request
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+### Guidelines
+
+- Write clear, concise commit messages
+- Add tests for new features
+- Update documentation as needed
+- Follow Go coding standards
+
+---
+
+## 🔗 Links
+
+- [Go Documentation](https://golang.org/doc/)
+- [SQLite Documentation](https://sqlite.org/docs.html)
+- [gRPC Documentation](https://grpc.io/docs/)
+- [Protocol Buffers Documentation](https://developers.google.com/protocol-buffers)
+
+---
