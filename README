@@ -123,37 +123,12 @@ The service will start and listen for connections on the configured port.
 
 ---
 
-## 📚 API Documentation
-
-### REST API Endpoints
-
-| Method | Endpoint             | Description                       |
-|--------|---------------------|-----------------------------------|
-| `GET`    | `/emails`              | List all email subscriptions      |
-| `GET`    | `/emails/{id}`         | Get a specific email subscription |
-| `POST`   | `/emails`              | Create a new email subscription   |
-| `PUT`    | `/emails/{id}`         | Update an existing subscription   |
-| `PATCH`  | `/emails/{id}/confirm` | Confirm an email subscription     |
-| `PATCH`  | `/emails/{id}/optout`  | Opt-out from the mailing list     |
-
 ### Example Request
 
 ```bash
 curl -X POST http://localhost:8080/emails \
   -H "Content-Type: application/json" \
   -d '{"email": "user@example.com"}'
-```
-
-### Example Response
-
-```json
-{
-  "id": 1,
-  "email": "user@example.com",
-  "confirmed": false,
-  "opted_out": false,
-  "created_at": "2024-01-15T10:30:00Z"
-}
 ```
 
 ---
