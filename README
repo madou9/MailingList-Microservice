@@ -76,16 +76,11 @@ go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
 go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
 ```
 
-## ⚙️ Code Generation (Protocol Buffers & gRPC)
+### ⚙️ Code Generation (Protocol Buffers & gRPC)
 
-### Install `protoc` Compiler
-
-Follow the official installation guide:  
-🔗 https://grpc.io/docs/protoc-installation/
-
-Alternatively, download the prebuilt binary from:  
-🔗 https://github.com/protocolbuffers/protobuf/releases  
-Make sure `protoc` is in your `$PATH`.
+protoc --go_out=. --go_opt=paths=source_relative \
+ --go-grpc_out=. --go-grpc_opt=paths=source_relative \
+ Proto/mail.proto
 
 ### 4. Install Dependencies
 
