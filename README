@@ -4,7 +4,7 @@ A lightweight microservice for managing mailing list subscriptions, confirmation
 
 ---
 
-##Features
+##Features##
 
 - ✅ Add, update, confirm, or soft-delete email subscriptions
 - 📄 Paginated email list querying
