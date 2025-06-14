@@ -1,70 +1,161 @@
-# Mailing List Microservice
+# 📧 Mailing List Microservice
+
+![Go Version](https://img.shields.io/badge/go-1.22.2-blue.svg)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
 
 A lightweight microservice for managing mailing list subscriptions, confirmations, and soft-deletes. Built in Go with SQLite, designed for modular integration into broader DevOps or cloud orchestration workflows.
 
----
+## 📋 Table of Contents
 
-## Features
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Usage](#usage)
+- [API Documentation](#api-documentation)
+- [Development](#development)
+- [Contributing](#contributing)
+- [License](#license)
 
-- Add, update, confirm, or soft-delete email subscriptions.
-- Paginated email list querying.
-- SQLite-backed persistence with auto schema setup.
-- Ready for RESTful API exposure and microservice integration.
+## ✨ Features
 
----
+- Add, update, confirm, or soft-delete email subscriptions
+- Paginated email list querying
+- SQLite-backed persistence with auto schema setup
+- RESTful API for easy integration
+- Supports JSON format for API requests and responses
+- Protocol Buffers and gRPC support
 
-## Tech Stack
+## 🛠️ Tech Stack
 
-- **Go** (Golang)
+- **Go** (Golang) 1.22.2+
 - **SQLite** (via `github.com/mattn/go-sqlite3`)
-- Modular folder structure:
-  - `mdb` → database logic
-  - `jsonapi` → (planned) HTTP interface
+- **JSON API** for RESTful endpoints
+- **Protocol Buffers** for efficient serialization
+- **gRPC** for high-performance RPC
 
----
+## 📁 Project Structure
 
-## Installation
+```
+.
+├── mdb/            # Database layer with SQLite operations
+│   └── mdb.go      # Core database functionality
+├── jsonapi/        # REST API implementation
+│   └── jsonapi.go  # HTTP handlers for JSON endpoints
+├── go.mod          # Go module definition
+├── go.sum          # Go module checksums
+└── README.md       # Project documentation
+```
 
-### 1. Clone the Repo
+## 📋 Prerequisites
 
-````bash
+- Go 1.22.2 or higher
+- GCC compiler (for SQLite)
+- Protocol Buffers compiler (for gRPC)
+
+## 🚀 Installation
+
+### 1. Clone the Repository
+
+```bash
 git clone https://github.com/yourusername/mailinglist-microservice.git
 cd mailinglist-microservice
+```
 
-
-# Setup
-
-This project requires a GCC compiler and the Protocol Buffers code generation tools.
-
----
-
-## 🔧 Install Protobuf Compiler
+### 2. Install Protocol Buffers Compiler
 
 Install the `protoc` tool by following the official instructions:
-👉 [https://grpc.io/docs/protoc-installation/](https://grpc.io/docs/protoc-installation/)
 
-Alternatively, you can download a pre-built binary from:
-👉 [https://github.com/protocolbuffers/protobuf/releases](https://github.com/protocolbuffers/protobuf/releases)
-Place the extracted binary somewhere in your `$PATH`.
+- [Official protoc installation guide](https://grpc.io/docs/protoc-installation/)
 
----
+Alternatively, download a pre-built binary from:
 
-## 📦 Install Go Protobuf Codegen Tools
+- [Protocol Buffers releases](https://github.com/protocolbuffers/protobuf/releases)
 
-Install the following tools using `go install`:
+Make sure to place the extracted binary somewhere in your `$PATH`.
+
+### 3. Install Go Protobuf Codegen Tools
 
 ```bash
 go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
 go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+```
 
+### 4. Install Dependencies
 
-.
-├── mdb/            # Core database functions
-│   └── mdb.go
-├── jsonapi/        # (Coming soon) HTTP REST API handlers
-│   └── jsonapi.go
-├── go.mod
-├── go.sum
-└── README.md
+```bash
+go mod download
+```
 
-````
+### 5. Build the Project
+
+```bash
+go build -o mailinglist .
+```
+
+## 🔍 Usage
+
+### Running the Service
+
+```bash
+./mailinglist
+```
+
+The service will start and listen for connections on the configured port.
+
+### Environment Variables
+
+- `PORT`: HTTP server port (default: 8080)
+- `DB_PATH`: SQLite database file path (default: ./mailinglist.db)
+
+## 📚 API Documentation
+
+### REST API Endpoints
+
+| Method | Endpoint             | Description                       |
+| ------ | -------------------- | --------------------------------- |
+| GET    | /emails              | List all email subscriptions      |
+| GET    | /emails/{id}         | Get a specific email subscription |
+| POST   | /emails              | Create a new email subscription   |
+| PUT    | /emails/{id}         | Update an existing subscription   |
+| PATCH  | /emails/{id}/confirm | Confirm an email subscription     |
+| PATCH  | /emails/{id}/optout  | Opt-out from the mailing list     |
+
+### Example Request
+
+```bash
+curl -X POST http://localhost:8080/emails \
+  -H "Content-Type: application/json" \
+  -d '{"email": "user@example.com"}'
+```
+
+## 💻 Development
+
+### Testing
+
+Run the test suite:
+
+```bash
+go test ./...
+```
+
+### Code Generation
+
+After modifying Protocol Buffer definitions, regenerate the code:
+
+```bash
+protoc --go_out=. --go-grpc_out=. proto/*.proto
+```
+
+## 👥 Contributing
+
+1. Fork the repository
+2. Create your feature branch: `git checkout -b feature/amazing-feature`
+3. Commit your changes: `git commit -m 'Add some amazing feature'`
+4. Push to the branch: `git push origin feature/amazing-feature`
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
