@@ -76,6 +76,17 @@ go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
 go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
 ```
 
+## ⚙️ Code Generation (Protocol Buffers & gRPC)
+
+### Install `protoc` Compiler
+
+Follow the official installation guide:  
+🔗 https://grpc.io/docs/protoc-installation/
+
+Alternatively, download the prebuilt binary from:  
+🔗 https://github.com/protocolbuffers/protobuf/releases  
+Make sure `protoc` is in your `$PATH`.
+
 ### 4. Install Dependencies
 
 ```bash
@@ -116,9 +127,9 @@ The service will start and listen for connections on the configured port.
 
 ### Environment Variables
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `PORT` | HTTP server port | `8080` |
+| Variable  | Description               | Default            |
+| --------- | ------------------------- | ------------------ |
+| `PORT`    | HTTP server port          | `8080`             |
 | `DB_PATH` | SQLite database file path | `./mailinglist.db` |
 
 ---
@@ -150,17 +161,6 @@ After modifying Protocol Buffer definitions, regenerate the code:
 ```bash
 protoc --go_out=. --go-grpc_out=. proto/*.proto
 ```
-
-### Development Setup
-
-1. **Fork** the repository
-2. **Clone** your fork locally
-3. **Create** a new branch for your feature
-4. **Make** your changes
-5. **Test** thoroughly
-6. **Submit** a pull request
-
----
 
 ## 👥 Contributing
 
