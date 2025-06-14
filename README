@@ -1,10 +1,10 @@
-# 📧 Mailing List Microservice
+#📧 Mailing List Microservice
 
 A lightweight microservice for managing mailing list subscriptions, confirmations, and soft-deletes. Built in Go with SQLite, designed for modular integration into broader DevOps or cloud orchestration workflows.
 
 ---
 
-## ✨ Features
+##Features
 
 - ✅ Add, update, confirm, or soft-delete email subscriptions
 - 📄 Paginated email list querying
