@@ -1,3 +1,37 @@
+# Mailing List Microservice
+
+A lightweight microservice for managing mailing list subscriptions, confirmations, and soft-deletes. Built in Go with SQLite, designed for modular integration into broader DevOps or cloud orchestration workflows.
+
+---
+
+## Features
+
+- Add, update, confirm, or soft-delete email subscriptions.
+- Paginated email list querying.
+- SQLite-backed persistence with auto schema setup.
+- Ready for RESTful API exposure and microservice integration.
+
+---
+
+## Tech Stack
+
+- **Go** (Golang)
+- **SQLite** (via `github.com/mattn/go-sqlite3`)
+- Modular folder structure:
+  - `mdb` → database logic
+  - `jsonapi` → (planned) HTTP interface
+
+---
+
+## Installation
+
+### 1. Clone the Repo
+
+````bash
+git clone https://github.com/yourusername/mailinglist-microservice.git
+cd mailinglist-microservice
+
+
 # Setup
 
 This project requires a GCC compiler and the Protocol Buffers code generation tools.
@@ -6,11 +40,11 @@ This project requires a GCC compiler and the Protocol Buffers code generation to
 
 ## 🔧 Install Protobuf Compiler
 
-Install the `protoc` tool by following the official instructions:  
+Install the `protoc` tool by following the official instructions:
 👉 [https://grpc.io/docs/protoc-installation/](https://grpc.io/docs/protoc-installation/)
 
-Alternatively, you can download a pre-built binary from:  
-👉 [https://github.com/protocolbuffers/protobuf/releases](https://github.com/protocolbuffers/protobuf/releases)  
+Alternatively, you can download a pre-built binary from:
+👉 [https://github.com/protocolbuffers/protobuf/releases](https://github.com/protocolbuffers/protobuf/releases)
 Place the extracted binary somewhere in your `$PATH`.
 
 ---
@@ -22,3 +56,15 @@ Install the following tools using `go install`:
 ```bash
 go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
 go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+
+
+.
+├── mdb/            # Core database functions
+│   └── mdb.go
+├── jsonapi/        # (Coming soon) HTTP REST API handlers
+│   └── jsonapi.go
+├── go.mod
+├── go.sum
+└── README.md
+
+````
