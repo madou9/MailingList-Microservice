@@ -1,24 +1,6 @@
 # 📧 Mailing List Microservice
 
-![Go Version](https://img.shields.io/badge/go-1.22.2-blue.svg)
-![License](https://img.shields.io/badge/license-MIT-green.svg)
-
 A lightweight microservice for managing mailing list subscriptions, confirmations, and soft-deletes. Built in Go with SQLite, designed for modular integration into broader DevOps or cloud orchestration workflows.
-
----
-
-## 📋 Table of Contents
-
-- [✨ Features](#-features)
-- [🛠️ Tech Stack](#️-tech-stack)
-- [📁 Project Structure](#-project-structure)
-- [📋 Prerequisites](#-prerequisites)
-- [🚀 Installation](#-installation)
-- [🔍 Usage](#-usage)
-- [📚 API Documentation](#-api-documentation)
-- [💻 Development](#-development)
-- [👥 Contributing](#-contributing)
-- [📄 License](#-license)
 
 ---
 
@@ -71,7 +53,7 @@ A lightweight microservice for managing mailing list subscriptions, confirmation
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/mailinglist-microservice.git
+git clone https://github.com/madou9/MailingList-Microservice.git
 cd mailinglist-microservice
 ```
 
@@ -112,7 +94,7 @@ go build -o mailinglist .
 
 ```bash
 # Clone and run in 3 commands
-git clone https://github.com/yourusername/mailinglist-microservice.git
+git clone https://github.com/madou9/MailingList-Microservice.git
 cd mailinglist-microservice
 go run main.go
 
@@ -224,12 +206,6 @@ We welcome contributions! Here's how to get started:
 
 ---
 
-## 📄 License
-
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
-
----
-
 ## 🔗 Links
 
 - [Go Documentation](https://golang.org/doc/)
@@ -239,6 +215,6 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ---
 
-<div align="center">
-  <strong>Built with ❤️ using Go</strong>
-</div>
+## 📄 License
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
