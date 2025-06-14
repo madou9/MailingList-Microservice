@@ -28,7 +28,7 @@ func returnJson[T any](w http.ResponseWriter, withData func() (T, error)){
 	data , serverErr := withData()
 	if serverErr != nil {
 		w.WriteHeader(500)
-		serverErrJson , err := json.Marshal(&serverError)
+		serverErrJson , err := json.Marshal(&serverErr)
 		if err != nil {
 			log.Print(err)
 			return 
@@ -37,7 +37,7 @@ func returnJson[T any](w http.ResponseWriter, withData func() (T, error)){
 		return
 	}
 
-	dataJson , err := jsonMarshal(&data)
+	dataJson , err := json.Marshal(&data)
 	if err != nil {
 		log.Print(err)
 		w.WriteHeader(500)
@@ -124,7 +124,7 @@ func UpdateEmail(db *sql.DB) http.Handler{
 			entry := mdb.EmailEntry{}
 		fromJson(req.Body, &entry)
 
-		if err := mdb.UpdateEmail(db, entry.Email); err!= nil {
+		if err := mdb.UpdateEmail(db, entry); err!= nil {
 			returnErr(w, err, 400)
 			return
 		}
@@ -157,11 +157,12 @@ func DeleteEmail(db *sql.DB) http.Handler{
 }
 
 func Serve(db *sql.DB, bind string) {
-	http.Handle("email/create", CreateEmail(db))
-	http.Handle("email/get", GetEmail(db))
-	http.Handle("email/get_batch", GetEmailBatch(db))
-	http.Handle("email/update", UpdateEmail(db))
-	http.Handle("email/delete", DeleteEmail(db))
+	http.Handle("/email/create", CreateEmail(db))
+	http.Handle("/email/get", GetEmail(db))
+	http.Handle("/email/get_batch", GetEmailBatch(db))
+	http.Handle("/email/update", UpdateEmail(db))
+	http.Handle("/email/delete", DeleteEmail(db))
+	log.Printf("JSON API server listening on %s\n", bind)
 	err := http.ListenAndServe(bind, nil)
 
 	if err != nil {
